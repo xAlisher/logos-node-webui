@@ -134,6 +134,16 @@ describe("LeaderRewardsView — data", () => {
     expect(within(dialog).getByText("Claimable vouchers")).toBeInTheDocument();
     expect(within(dialog).getByText("Voucher #1")).toBeInTheDocument();
     expect(within(dialog).getByText("Voucher #2")).toBeInTheDocument();
+
+    // Voucher Detail Dialog parity ids (§20): detail body, the tip (copyable) and
+    // the Claim button inside the dialog.
+    const detail = within(dialog).getByTestId("dialog-voucher-detail");
+    expect(detail).toBeInTheDocument();
+    expect(within(dialog).getByTestId("dialog-voucher-tip-copy")).toBeInTheDocument();
+    const claim = within(dialog).getByTestId("dialog-voucher-claim");
+    expect(claim).toHaveTextContent("Claim all");
+    // The tip row carries a copy affordance (the per-voucher hashes do too).
+    expect(within(detail).getAllByRole("button", { name: /copy/i }).length).toBeGreaterThan(0);
   });
 
   test("info buttons open the info dialog for each card", async () => {

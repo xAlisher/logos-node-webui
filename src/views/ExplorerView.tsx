@@ -36,13 +36,33 @@ const INFO_TEXT =
   "Paste a block header id or a transaction hash, then press Search. The lookup is " +
   "auto-detected: it tries a block first, then a transaction.";
 
-export function ExplorerView({ nodeOffReason, nodeOffSeverity }: NodeViewProps) {
+export interface ExplorerViewProps extends NodeViewProps {
+  /**
+   * A programmatic "Open in Explorer" request from the shell: the Rewards/Mining
+   * history rows jump here and run this search. `nonce` changes on each request so
+   * the same id can be re-opened. (shell-programmatic-nav-explorer)
+   */
+  openRequest?: { term: string; nonce: number };
+}
+
+export function ExplorerView({ nodeOffReason, nodeOffSeverity, openRequest }: ExplorerViewProps) {
   const nodeRunning = !nodeOffReason;
   const { blocks, status } = useBlockModel(nodeRunning);
   const { state, search, clear } = useExplorerLookup(blocks);
 
   const [text, setText] = useState("");
   const [infoOpen, setInfoOpen] = useState(false);
+
+  // Programmatic search driven by the shell (Open in Explorer). Runs on mount (the
+  // tab is freshly mounted when the shell switches to it) and whenever the nonce
+  // changes while already on the Explorer tab.
+  useEffect(() => {
+    const term = openRequest?.term?.trim();
+    if (!term) return;
+    setText(term);
+    void search(term);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openRequest?.nonce]);
 
   // Ctrl+K focuses and selects the search field (explorer-search-shortcut).
   useEffect(() => {

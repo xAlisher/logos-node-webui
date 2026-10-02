@@ -23,7 +23,7 @@ import "../views";
 // contract: "no feature or action left behind" becomes enforceable, not aspirational.
 //
 // Until then the gate PASSES but prints the uncovered count, so P2/P3 can watch it fall.
-const DECLARE_COMPLETE = false;
+const DECLARE_COMPLETE = true;
 
 describe("parity gate", () => {
   test("loads the full 225-id contract", () => {

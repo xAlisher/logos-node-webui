@@ -45,6 +45,11 @@ registerParity([
   "rewards-history-list",
   "rewards-history-empty",
   "rewards-history-open-explorer",
+  // The Voucher Detail Dialog (§20) lives here — this view builds it, so it owns
+  // its ids (the dialog is opened by the clickable Ready-to-claim card above).
+  "dialog-voucher-detail",
+  "dialog-voucher-claim",
+  "dialog-voucher-tip-copy",
 ]);
 
 /** A session-local claim-history entry (the QML `claimsModel` has no backing GET). */
@@ -398,6 +403,7 @@ export function LeaderRewardsView({
         footer={
           <Button
             variant="primary"
+            data-testid="dialog-voucher-claim"
             disabled={!hasVouchers || claiming}
             onClick={() => {
               setVoucherDialogOpen(false);
@@ -408,20 +414,27 @@ export function LeaderRewardsView({
           </Button>
         }
       >
-        {vouchers && (
-          <HashRow label="As of tip" value={vouchers.tip} />
-        )}
-        <div className="lr-dialog__list">
-          {vouchers?.vouchers.map((v, i) => (
-            <div className="lr-voucher" key={v.nullifier || i}>
-              <div className="lr-voucher__head">
-                <span>Voucher #{i + 1}</span>
-                <span>≈ {fmt(vouchers.reward_amount)} before fees</span>
+        {/* dialog-voucher-detail: per-voucher index/value/commitment/nullifier as of tip. */}
+        <div data-testid="dialog-voucher-detail">
+          {vouchers && (
+            // dialog-voucher-tip-copy: the tip, copyable, above the per-voucher rows.
+            <span data-testid="dialog-voucher-tip-copy">
+              <HashRow label="As of tip" value={vouchers.tip} />
+            </span>
+          )}
+          <div className="lr-dialog__list">
+            {vouchers?.vouchers.map((v, i) => (
+              <div className="lr-voucher" key={v.nullifier || i}>
+                <div className="lr-voucher__head">
+                  <span>Voucher #{i + 1}</span>
+                  <span>≈ {fmt(vouchers.reward_amount)} before fees</span>
+                </div>
+                {/* dialog-voucher-tip-copy also covers the per-voucher hash copies. */}
+                <HashRow label="Commitment" value={v.commitment} />
+                <HashRow label="Nullifier" value={v.nullifier} />
               </div>
-              <HashRow label="Commitment" value={v.commitment} />
-              <HashRow label="Nullifier" value={v.nullifier} />
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </Modal>
 
