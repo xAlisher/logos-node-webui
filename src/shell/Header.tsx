@@ -9,7 +9,7 @@
 // The Run button replicates the QML onClicked branch exactly, including the
 // start-with-stale-config → open ConfigUpgradeDialog path.
 
-import { Button, Tooltip } from "../ds";
+import { Button } from "../ds";
 import { registerParity } from "../test/parity";
 import { LogosIcon } from "./LogosIcon";
 
@@ -106,16 +106,15 @@ export function Header({
       </h1>
       <div className="shell-header-spacer" />
 
-      {/* Fund / Stop Mining — tooltip spells out the one thing it can't say itself. */}
-      <Tooltip label="Mining runs until you stop it">
-        <Button
-          data-testid="header-fund-button"
-          disabled={!fundEnabled}
-          onClick={onFund}
-        >
-          {miningActive ? "Stop Mining" : "Fund"}
-        </Button>
-      </Tooltip>
+      {/* Fund / Stop Mining. (The hover tooltip was removed — it rendered off-screen
+          from this top-right corner.) */}
+      <Button
+        data-testid="header-fund-button"
+        disabled={!fundEnabled}
+        onClick={onFund}
+      >
+        {miningActive ? "Stop Mining" : "Fund"}
+      </Button>
 
       {/* Start / Stop Node (Primary). Disabled while stopping, or when neither
           start nor stop is available. Hidden where the node lifecycle is managed by

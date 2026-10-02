@@ -31,13 +31,6 @@ describe("Header — Fund button (header-fund-button, tooltip, gating)", () => {
     await userEvent.click(screen.getByTestId("header-fund-button"));
     expect(onFund).toHaveBeenCalledTimes(1);
   });
-
-  test("tooltip 'Mining runs until you stop it' shows on hover", async () => {
-    render(<Header fundEnabled />);
-    expect(screen.queryByRole("tooltip")).toBeNull();
-    await userEvent.hover(screen.getByTestId("header-fund-button"));
-    expect(screen.getByRole("tooltip")).toHaveTextContent("Mining runs until you stop it");
-  });
 });
 
 describe("Header — Run button (header-run-button, stopping, gating, upgrade)", () => {
