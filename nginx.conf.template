@@ -1,0 +1,31 @@
+# nginx serves the built static UI and reverse-proxies the node HTTP API.
+# ${NODE_UPSTREAM} is substituted at container start by the stock nginx
+# `20-envsubst-on-templates.sh` entrypoint (host:port of the node, e.g. node:8080).
+server {
+    listen 80;
+    server_name _;
+    root /usr/share/nginx/html;
+    index index.html;
+
+    # Tab-state shell (no client-side router), but keep a safe SPA fallback.
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # The UI calls the node under the /api prefix (see src/api/client.ts).
+    # Strip /api/ and forward to the node's HTTP API on the package network.
+    location /api/ {
+        proxy_pass http://${NODE_UPSTREAM}/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header Connection "";
+
+        # Two endpoints are Server-Sent Event streams
+        # (/cryptarchia/events/blocks/stream, /cryptarchia/lib-stream):
+        # never buffer, never cache, don't time out the long-lived connection.
+        proxy_buffering off;
+        proxy_cache off;
+        proxy_read_timeout 3600s;
+        chunked_transfer_encoding off;
+    }
+}
