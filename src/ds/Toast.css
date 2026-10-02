@@ -1,0 +1,49 @@
+.ds-toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-medium);
+  min-width: 240px;
+  max-width: 420px;
+  padding: var(--space-medium) var(--space-large);
+  border-radius: var(--radius-large);
+  background: var(--surface);
+  border-left: 3px solid var(--info);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--text-primary);
+}
+
+.ds-toast--info {
+  border-left-color: var(--info);
+}
+.ds-toast--success {
+  border-left-color: var(--success);
+}
+.ds-toast--warning {
+  border-left-color: var(--warning);
+}
+.ds-toast--error {
+  border-left-color: var(--error);
+}
+
+.ds-toast__message {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.ds-toast__dismiss {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--text-tertiary);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 120ms ease;
+}
+.ds-toast__dismiss:hover {
+  color: var(--text);
+}

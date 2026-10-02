@@ -1,0 +1,39 @@
+.ds-textfield {
+  width: 200px;
+  height: 40px;
+  padding: 0 var(--space-medium);
+  border: var(--border-width) solid var(--background-elevated);
+  border-radius: var(--radius-small);
+  background: var(--background-secondary);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--text-secondary-size);
+  line-height: var(--line-height);
+  outline: none;
+  transition: border-color 120ms ease;
+}
+
+.ds-textfield::placeholder {
+  color: var(--text-tertiary);
+}
+
+.ds-textfield:focus {
+  border-color: var(--overlay-orange);
+}
+
+.ds-textfield:disabled {
+  color: var(--text-muted);
+  cursor: default;
+}
+
+.ds-textfield-label {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--space-tiny);
+}
+
+.ds-textfield-label__text {
+  font-family: var(--font-sans);
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+}

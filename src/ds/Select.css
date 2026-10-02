@@ -1,0 +1,86 @@
+.ds-select {
+  position: relative;
+  display: inline-block;
+}
+
+.ds-select__control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-small);
+  width: 100%;
+  min-width: 160px;
+  height: 32px;
+  padding: 0 var(--space-small) 0 10px;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-small);
+  background: var(--background-button);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--text-secondary-size);
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.ds-select__control:active {
+  background: var(--pressed);
+}
+
+.ds-select--disabled .ds-select__control {
+  background: var(--background-secondary);
+  border-color: var(--border-subtle);
+  color: var(--text-muted);
+  cursor: default;
+}
+
+.ds-select__value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ds-select__value--placeholder {
+  color: var(--text-tertiary);
+}
+
+.ds-select--disabled .ds-select__value {
+  color: var(--text-muted);
+}
+
+.ds-select__chevron {
+  display: inline-flex;
+  flex: 0 0 auto;
+  color: var(--text);
+}
+.ds-select--disabled .ds-select__chevron {
+  color: var(--text-muted);
+}
+
+.ds-select__popup {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  margin: 0;
+  padding: 1px;
+  list-style: none;
+  background: var(--background-secondary);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-small);
+}
+
+.ds-select__option {
+  padding: 6px 10px;
+  border-radius: var(--radius-small);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--text-secondary-size);
+  cursor: pointer;
+  background: transparent;
+}
+
+.ds-select__option:hover,
+.ds-select__option--selected {
+  background: var(--surface);
+}

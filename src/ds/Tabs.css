@@ -1,0 +1,50 @@
+.ds-tabs {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: var(--space-small);
+  background: transparent;
+}
+
+.ds-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  padding: 4px var(--space-small);
+  border: none;
+  background: transparent;
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: var(--text-primary);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  transition: color 120ms ease;
+}
+
+.ds-tab__icon {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+}
+
+.ds-tab--active {
+  color: var(--primary);
+}
+
+.ds-tab__indicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  border-radius: 1.5px;
+  background: var(--primary);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 200ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.ds-tab--active .ds-tab__indicator {
+  transform: scaleX(1);
+}

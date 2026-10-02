@@ -1,0 +1,58 @@
+.ds-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 200px;
+  height: 50px;
+  padding: 0 var(--space-large);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-xlarge);
+  background: var(--background-secondary);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--text-secondary-size);
+  font-weight: var(--weight-medium);
+  line-height: var(--line-height);
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease,
+    color 120ms ease;
+}
+
+/* hover and pressed share the same look (isActive = hovered || pressed) */
+.ds-button:hover:not(:disabled),
+.ds-button:active:not(:disabled) {
+  background: var(--background-muted);
+  border-color: var(--overlay-orange);
+}
+
+.ds-button:disabled {
+  background: var(--background-muted);
+  border-color: var(--border);
+  color: var(--text-muted);
+  cursor: default;
+}
+
+/* Primary / CTA — prototype addition */
+.ds-button--primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--text);
+}
+.ds-button--primary:hover:not(:disabled),
+.ds-button--primary:active:not(:disabled) {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+.ds-button--primary:disabled {
+  background: var(--background-muted);
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+
+/* Compact size — prototype addition */
+.ds-button--compact {
+  min-width: 0;
+  height: 34px;
+  padding: 6px var(--space-small);
+}

@@ -1,0 +1,50 @@
+.ds-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  color: var(--text);
+}
+
+.ds-table__head {
+  background: var(--background-button);
+  border-radius: var(--radius-large);
+}
+
+.ds-table__th {
+  height: 36px;
+  padding: 0 var(--space-medium);
+  /* header cell overlaid with backgroundInset @ .6 */
+  background: rgba(20, 20, 20, 0.6);
+  color: var(--text-secondary);
+  font-size: var(--text-secondary-size);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ds-table__th:first-child {
+  border-top-left-radius: var(--radius-large);
+  border-bottom-left-radius: var(--radius-large);
+}
+.ds-table__th:last-child {
+  border-top-right-radius: var(--radius-large);
+  border-bottom-right-radius: var(--radius-large);
+}
+
+.ds-table__row {
+  border-bottom: var(--border-width) solid var(--border-tertiary-muted);
+}
+
+.ds-table__td {
+  height: 64px;
+  padding: 0 var(--space-medium);
+  font-size: var(--text-primary);
+  color: var(--text);
+}
+
+.ds-table__state {
+  height: 64px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: var(--text-primary);
+}

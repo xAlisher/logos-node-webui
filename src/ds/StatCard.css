@@ -1,0 +1,45 @@
+.ds-statcard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-small);
+  min-width: 160px;
+}
+
+.ds-statcard__value {
+  font-family: var(--font-sans);
+  font-size: var(--text-panel-title);
+  font-weight: var(--weight-medium);
+  color: var(--text);
+  line-height: var(--line-height);
+}
+
+.ds-statcard__divider {
+  height: var(--border-width);
+  background: var(--border-tertiary-muted);
+}
+
+.ds-statcard__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-tiny);
+}
+
+.ds-statcard__label {
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+}
+
+.ds-statcard__info {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-pill);
+  border: var(--border-width) solid var(--text-tertiary);
+  color: var(--text-tertiary);
+  font-size: 10px;
+  font-style: italic;
+  font-family: var(--font-sans);
+  cursor: help;
+}

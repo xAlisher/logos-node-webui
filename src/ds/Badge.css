@@ -1,0 +1,30 @@
+.ds-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-tiny);
+  padding: 4px var(--space-small);
+  border: var(--border-width) solid var(--ds-badge-color, var(--accent-orange));
+  border-radius: var(--radius-small);
+  background: color-mix(
+    in srgb,
+    var(--ds-badge-color, var(--accent-orange)) 18%,
+    transparent
+  );
+}
+
+.ds-badge__icon {
+  display: inline-flex;
+  width: 12px;
+  height: 12px;
+  color: var(--ds-badge-color, var(--accent-orange));
+}
+
+.ds-badge__label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.22px;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--ds-badge-color, var(--accent-orange));
+}

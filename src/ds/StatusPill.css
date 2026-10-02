@@ -1,0 +1,21 @@
+.ds-statuspill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-small);
+  font-family: var(--font-sans);
+  font-size: var(--text-secondary-size);
+  font-weight: var(--weight-medium);
+  color: var(--ds-status-color, var(--text));
+}
+
+.ds-statuspill__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--ds-status-color, var(--text));
+  flex: 0 0 auto;
+}
+
+.ds-statuspill__label {
+  line-height: 1;
+}

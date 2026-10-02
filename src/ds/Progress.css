@@ -1,0 +1,29 @@
+.ds-progress {
+  position: relative;
+  width: 200px;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--background-secondary);
+  overflow: hidden;
+}
+
+.ds-progress__fill {
+  height: 100%;
+  border-radius: 4px;
+  background: var(--primary);
+  transition: width 120ms ease;
+}
+
+.ds-progress--indeterminate .ds-progress__fill {
+  width: 30%;
+  animation: ds-progress-slide 1200ms ease-in-out infinite alternate;
+}
+
+@keyframes ds-progress-slide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(333%);
+  }
+}

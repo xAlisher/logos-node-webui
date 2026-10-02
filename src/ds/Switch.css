@@ -1,0 +1,57 @@
+.ds-switch-field {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-small);
+}
+
+.ds-switch-field--disabled {
+  opacity: 0.5;
+}
+
+.ds-switch {
+  display: inline-flex;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+.ds-switch:disabled {
+  cursor: default;
+}
+
+.ds-switch__track {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+  border: var(--border-width) solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.ds-switch--on .ds-switch__track {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.ds-switch__handle {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-pill);
+  background: var(--text);
+  transition: transform 120ms ease;
+}
+
+.ds-switch--on .ds-switch__handle {
+  transform: translateX(16px);
+}
+
+.ds-switch__label {
+  font-family: var(--font-sans);
+  font-size: var(--text-primary);
+  color: var(--text);
+}

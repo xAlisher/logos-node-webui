@@ -1,0 +1,7 @@
+.ds-card {
+  background: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-small);
+  padding: var(--space-medium);
+  color: var(--text);
+}

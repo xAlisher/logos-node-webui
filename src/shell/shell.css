@@ -1,0 +1,138 @@
+/* App shell styling — self-contained for P1, using only the DS tokens from
+ * src/styles/tokens.css (no src/ds dependency yet). TODO(P2): most of this is replaced
+ * when the real LogosTabBar / LogosButton / LogosNotice components slot in. */
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: var(--background);
+  color: var(--text);
+}
+
+/* ---- Header (opPage top bar) ---- */
+.shell-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-medium);
+  padding: var(--space-large) var(--space-xlarge);
+  border-bottom: var(--border-width) solid var(--border-subtle);
+}
+.shell-logo {
+  font-size: var(--text-panel-title);
+  font-weight: var(--weight-bold);
+  color: var(--primary);
+  line-height: 1;
+}
+.shell-title {
+  margin: 0;
+  font-size: var(--text-panel-title);
+  font-weight: var(--weight-bold);
+}
+.shell-header-spacer {
+  flex: 1;
+}
+.shell-btn {
+  padding: var(--space-small) var(--space-large);
+  border: var(--border-width) solid var(--border-interactive);
+  border-radius: var(--radius-medium);
+  background: var(--background-button);
+  color: var(--text);
+  font: inherit;
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+}
+.shell-btn:hover {
+  background: var(--hover);
+}
+.shell-btn-primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--background-black);
+}
+.shell-btn-primary:hover {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+/* ---- Tab bar (sectionTabs) ---- */
+.shell-tabbar {
+  display: flex;
+  gap: var(--space-tiny);
+  padding: 0 var(--space-xlarge);
+  border-bottom: var(--border-width) solid var(--border-subtle);
+}
+.shell-tab {
+  padding: var(--space-medium) var(--space-large);
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+}
+.shell-tab:hover {
+  color: var(--text);
+}
+.shell-tab[data-active="true"] {
+  color: var(--text);
+  border-bottom-color: var(--primary);
+}
+
+/* ---- Section stack ---- */
+.shell-stack {
+  flex: 1;
+  padding: var(--space-xlarge);
+}
+
+/* ---- Node-off notice ---- */
+.node-off-notice {
+  padding: var(--space-medium) var(--space-large);
+  margin-bottom: var(--space-large);
+  border-radius: var(--radius-medium);
+  border: var(--border-width) solid var(--border-hairline);
+  background: var(--background-muted);
+  color: var(--text);
+}
+.node-off-notice[data-severity="warning"] {
+  border-color: var(--warning);
+}
+.node-off-notice[data-severity="error"] {
+  border-color: var(--error);
+}
+
+/* ---- Footer (chainFooter) ---- */
+.shell-footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+  padding: var(--space-medium) var(--space-xlarge);
+  border-top: var(--border-width) solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-secondary-size);
+}
+.shell-copy {
+  border: var(--border-width) solid var(--border-interactive);
+  border-radius: var(--radius-small);
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  cursor: pointer;
+}
+
+/* ---- View stubs (P1 placeholders) ---- */
+.view-stub-title {
+  margin: 0 0 var(--space-small);
+  font-size: var(--text-title);
+  font-weight: var(--weight-bold);
+}
+.view-stub-placeholder {
+  display: inline-block;
+  padding: var(--space-tiny) var(--space-small);
+  border-radius: var(--radius-pill);
+  background: var(--background-secondary);
+  color: var(--text-tertiary);
+  font-size: var(--text-secondary-size);
+}
