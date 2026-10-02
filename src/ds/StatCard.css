@@ -39,7 +39,7 @@
   border: var(--border-width) solid var(--text-tertiary);
   color: var(--text-tertiary);
   font-size: 10px;
-  font-style: italic;
+  font-style: normal;
   font-family: var(--font-sans);
   cursor: help;
 }
