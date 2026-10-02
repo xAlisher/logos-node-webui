@@ -10,16 +10,17 @@
 // and surfaces a confirm step; the write only happens after that confirm.
 //
 // Account source: the 0.3.0 node HTTP API has no "list my wallet keys" endpoint
-// (in the QML the keystore is remoted from C++). The keys this node actually
-// controls surface in `GET /pow/status` as the auto-claim targets, so we take the
-// account set from there and read each one's balance + notes via
-// `GET /wallet/:pk/balance`.
+// (in the QML the keystore is remoted from C++). We reconstruct the account set
+// from the two places keys surface over HTTP: `GET /pow/status` auto-claim targets
+// (mining/claim keys) and `GET /leader/aged-notes` note owners (staking keys),
+// merged + deduped, then read each one's balance + notes via `GET /wallet/:pk/balance`.
 
 import { useCallback, useEffect, useState } from "react";
 
 import { ApiError } from "../api/client";
 import {
   channelDeposit,
+  getLeaderAgedNotes,
   getPowStatus,
   getWalletBalance,
   transferFunds,
@@ -102,27 +103,37 @@ export function WalletView({ nodeOffReason, nodeOffSeverity }: NodeViewProps) {
     if (!nodeRunning) return;
     setAccountsLoading(true);
     try {
-      const status = await getPowStatus();
-      const keys = status.auto_claim.targets.map((t) => t.public_key);
+      // Two key sources the node exposes over HTTP (there is no keystore-list
+      // endpoint): the PoW auto-claim targets (/pow/status) and the staking keys
+      // that own aged notes (/leader/aged-notes). Merge + dedup; the PoW/claim
+      // role wins when a key is both.
+      const [statusR, agedR] = await Promise.allSettled([getPowStatus(), getLeaderAgedNotes()]);
+      const roleByKey = new Map<string, string>();
+      if (agedR.status === "fulfilled") {
+        for (const n of agedR.value.notes ?? []) {
+          if (n.public_key && !roleByKey.has(n.public_key)) roleByKey.set(n.public_key, "Staking key");
+        }
+      }
+      if (statusR.status === "fulfilled") {
+        for (const t of statusR.value.auto_claim.targets) {
+          roleByKey.set(t.public_key, "Mining / claim key");
+        }
+      }
+      if (statusR.status === "rejected" && agedR.status === "rejected") throw statusR.reason;
+
       const rows = await Promise.all(
-        keys.map(async (pk): Promise<WalletAccount> => {
+        [...roleByKey.entries()].map(async ([pk, roleLabel]): Promise<WalletAccount> => {
           try {
             const bal = await getWalletBalance(pk);
             return {
               address: pk,
               name: shortName(pk),
-              roleLabel: "Mining / claim key",
+              roleLabel,
               balance: leptaString(bal.balance),
               notes: bal.notes ?? {},
             };
           } catch {
-            return {
-              address: pk,
-              name: shortName(pk),
-              roleLabel: "Mining / claim key",
-              balance: "",
-              notes: {},
-            };
+            return { address: pk, name: shortName(pk), roleLabel, balance: "", notes: {} };
           }
         }),
       );

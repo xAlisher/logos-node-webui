@@ -28,7 +28,18 @@ export interface GracefulShutdown {
   requestClose: () => boolean;
 }
 
-export function useGracefulShutdown(model: ShellModel, deps: GracefulShutdownDeps): GracefulShutdown {
+export function useGracefulShutdown(
+  model: ShellModel,
+  deps: GracefulShutdownDeps,
+  /**
+   * Whether the graceful-shutdown veto is active. Native builds manage the node
+   * subprocess, so closing the window must stop it first (true). The web build has
+   * no node lifecycle — closing a browser tab leaves the containerised node
+   * running — so the beforeunload prompt is just a nuisance and is disabled (false).
+   * (default true)
+   */
+  enabled = true,
+): GracefulShutdown {
   const [quitting, setQuitting] = useState(false);
   const quittingRef = useRef(false);
   quittingRef.current = quitting;
@@ -50,8 +61,9 @@ export function useGracefulShutdown(model: ShellModel, deps: GracefulShutdownDep
   }, [quitting, model]);
 
   // Wire the browser beforeunload so a real close while busy prompts (the web veto).
+  // Skipped where there is no node lifecycle to protect (web build).
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (!enabled || typeof window === "undefined") return;
     const onBeforeUnload = (e: BeforeUnloadEvent) => {
       if (requestClose()) {
         e.preventDefault();
@@ -60,7 +72,7 @@ export function useGracefulShutdown(model: ShellModel, deps: GracefulShutdownDep
     };
     window.addEventListener("beforeunload", onBeforeUnload);
     return () => window.removeEventListener("beforeunload", onBeforeUnload);
-  }, [requestClose]);
+  }, [requestClose, enabled]);
 
   return { quitting, requestClose };
 }

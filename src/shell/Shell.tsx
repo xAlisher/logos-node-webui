@@ -167,10 +167,14 @@ export function Shell({
   useVoucherRefresh({ gateOpen: voucherGateOpen(model), fetchVouchers: deps.fetchVouchers });
 
   // Graceful shutdown. (shell-graceful-shutdown)
-  const shutdown = useGracefulShutdown(model, {
-    stopNode: () => void handleStop(),
-    closeWindow: deps.closeWindow ?? (() => typeof window !== "undefined" && window.close()),
-  });
+  const shutdown = useGracefulShutdown(
+    model,
+    {
+      stopNode: () => void handleStop(),
+      closeWindow: deps.closeWindow ?? (() => typeof window !== "undefined" && window.close()),
+    },
+    caps.nodeLifecycle,
+  );
 
   // ---- Node control handlers (wired to the mutations) ----------------------
   async function handleFund() {

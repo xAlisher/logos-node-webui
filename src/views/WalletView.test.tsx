@@ -8,6 +8,7 @@ import { WalletView } from "./WalletView";
 // and the mutating calls can be asserted.
 vi.mock("../api/endpoints", () => ({
   getPowStatus: vi.fn(),
+  getLeaderAgedNotes: vi.fn(),
   getWalletBalance: vi.fn(),
   transferFunds: vi.fn(),
   channelDeposit: vi.fn(),
@@ -15,6 +16,7 @@ vi.mock("../api/endpoints", () => ({
 
 import {
   channelDeposit,
+  getLeaderAgedNotes,
   getPowStatus,
   getWalletBalance,
   transferFunds,
@@ -26,9 +28,13 @@ const CHANNEL = "d".repeat(64);
 
 beforeEach(() => {
   vi.mocked(getPowStatus).mockReset();
+  vi.mocked(getLeaderAgedNotes).mockReset();
   vi.mocked(getWalletBalance).mockReset();
   vi.mocked(transferFunds).mockReset();
   vi.mocked(channelDeposit).mockReset();
+
+  // No aged notes by default → accounts come from the PoW targets alone.
+  vi.mocked(getLeaderAgedNotes).mockResolvedValue({ tip: "tip0", count: 0, total_value: 0, notes: [] });
 
   vi.mocked(getPowStatus).mockResolvedValue({
     is_mining: true,
@@ -70,6 +76,26 @@ test("accounts are built from pow targets + per-key balance", async () => {
   expect(list).toHaveTextContent(A);
   expect(list.textContent).toMatch(/5\s*LGO/);
   expect(getWalletBalance).toHaveBeenCalledWith(A);
+});
+
+test("staking keys from aged notes are merged in (deduped against pow targets)", async () => {
+  const B = "b".repeat(64);
+  // A is also a pow target (above); B owns aged notes only → a Staking key.
+  vi.mocked(getLeaderAgedNotes).mockResolvedValue({
+    tip: "tip0",
+    count: 1,
+    total_value: 1000000000,
+    notes: [
+      { public_key: A, value: 1000000000 },
+      { public_key: B, value: 1000000000 },
+    ] as never,
+  });
+  renderWallet();
+  const list = await screen.findByTestId("accounts-list");
+  // B (aged-notes-only) is a Staking key; A keeps the mining/claim role (pow wins).
+  await waitFor(() => expect(list.textContent).toContain("Staking key"));
+  expect(list.textContent).toContain("Mining / claim key");
+  expect(getWalletBalance).toHaveBeenCalledWith(B);
 });
 
 test("transfer: the mutating POST fires only after the confirm step", async () => {
