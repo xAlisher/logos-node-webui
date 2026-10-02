@@ -1,0 +1,25 @@
+/* Logos Design System tokens — PLACEHOLDER.
+ * The authoritative values are extracted into docs/spec/design-system.md (by the DS mapping
+ * agent); this file is replaced with the full token set (colors, typography, spacing, radii,
+ * light/dark) as part of P1 (foundation). Brand accent is #ff0079. */
+:root {
+  --color-accent: #ff0079;
+  --color-bg: #0f1115;
+  --color-surface: #171a21;
+  --color-text: #e6e8eb;
+  --color-muted: #8b93a1;
+  --color-border: #272b33;
+  --color-ok: #3fb950;
+  --color-warn: #d29922;
+  --color-bad: #f85149;
+
+  --font-body: -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --radius: 10px;
+}
