@@ -19,5 +19,16 @@ export { PowConfigView } from "./PowConfigView";
 export { PowAutoClaimTargets } from "./PowAutoClaimTargets";
 export { OnboardingFlow } from "./OnboardingFlow";
 export { InfoDialog } from "./InfoDialog";
+export { ConfigUpgradeDialog } from "./ConfigUpgradeDialog";
+export type {
+  ConfigUpgradeDialogProps,
+  ConfigUpgradeState,
+} from "./ConfigUpgradeDialog";
+export type {
+  NodeSettingsViewProps,
+  NodeSettingsModel,
+  NodeSettingsApi,
+  ConfigUpgradeResult,
+} from "./NodeSettingsView";
 
 export type { NodeViewProps } from "./types";

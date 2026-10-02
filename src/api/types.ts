@@ -371,6 +371,10 @@ export interface JoinBlendRequestBody {
 
 /** `POST /network/dial_peer` (`DialPeerRequestBody`). */
 export interface DialPeerRequestBody {
-  /** Peer multiaddr. Field name not captured from Rust — verify against node. */
-  address: string;
+  /**
+   * Multiaddress of the peer to dial. Verified against the 0.3.0 Rust source:
+   * `nodes/node/binary/src/api/handlers.rs` struct `DialPeerRequestBody { pub addr: Multiaddr }`,
+   * read in `dial_peer` as `req.addr`. (Previously an unverified `address` guess.)
+   */
+  addr: string;
 }

@@ -44,8 +44,13 @@ test("tab switching mounts the selected section and unmounts the previous", asyn
   expect(screen.getByTestId("view-node-settings")).toBeInTheDocument();
 });
 
-test("NodeOffNotice shows in a node-dependent view when the node is off", () => {
+test("NodeOffNotice shows in a node-dependent view when the node is off", async () => {
+  const user = userEvent.setup();
+  // The Node (dashboard) tab conveys node status through its own status hero (a
+  // faithful replica of NodeDashboardView.qml, which carries no NodeOffNotice), so
+  // assert the shared banner on another node-dependent view — here, Mining.
   render(<Shell nodeOffReason="The node isn't running yet." nodeOffSeverity="warning" />);
+  await user.click(screen.getByRole("tab", { name: "Mining" }));
 
   const panel = screen.getByRole("tabpanel");
   const notice = within(panel).getByTestId("node-off-notice");

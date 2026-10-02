@@ -1,0 +1,286 @@
+/* Wallet tab (issue #8) — layout + panel styling for WalletView and the three
+   embedded panels (Accounts / Transfer / Channel Deposit). Token-driven, dark. */
+
+.wallet-view {
+  display: flex;
+  gap: var(--space-large);
+  align-items: flex-start;
+}
+
+/* --- Section nav (left) --- */
+.wallet-nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-tiny);
+  min-width: 160px;
+  flex: 0 0 auto;
+}
+.wallet-nav__item {
+  text-align: left;
+  padding: var(--space-small) var(--space-medium);
+  border: none;
+  border-radius: var(--radius-medium);
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  cursor: pointer;
+}
+.wallet-nav__item:hover {
+  background: var(--surface-raised);
+  color: var(--text);
+}
+.wallet-nav__item--active {
+  background: var(--surface-raised);
+  color: var(--text);
+}
+
+.wallet-panel {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: var(--space-large);
+  background: var(--surface-raised);
+  border-radius: var(--radius-large);
+}
+
+/* --- Shared field chrome --- */
+.wallet-field__label {
+  display: block;
+  margin: var(--space-small) 0 var(--space-tiny);
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+}
+.wallet-field__help {
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-small);
+}
+.wallet-field__error {
+  font-size: var(--text-secondary-size);
+  color: var(--error);
+  margin: var(--space-tiny) 0 0;
+}
+
+/* --- Accounts --- */
+.wallet-accounts__toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--space-medium);
+}
+.wallet-accounts__empty {
+  color: var(--text-secondary);
+  font-size: var(--text-secondary-size);
+}
+.wallet-accounts__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-small);
+}
+.wallet-accounts__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-medium);
+  padding: var(--space-medium);
+  background: var(--surface-recessed);
+  border-radius: var(--radius-medium);
+}
+.wallet-accounts__id {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.wallet-accounts__name {
+  color: var(--text);
+}
+.wallet-accounts__role {
+  font-size: var(--text-secondary-size);
+  color: var(--text-tertiary);
+}
+.wallet-accounts__address {
+  font-family: var(--font-mono);
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.wallet-accounts__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+  flex: 0 0 auto;
+}
+.wallet-accounts__balance {
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Transfer --- */
+.wallet-transfer__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-small);
+  max-width: 560px;
+}
+.wallet-transfer__amount-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.wallet-transfer__available {
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+}
+.wallet-transfer__overbalance {
+  color: var(--error);
+  font-size: var(--text-secondary-size);
+  margin: 0;
+}
+.wallet-transfer__actions {
+  margin-top: var(--space-medium);
+}
+
+/* --- Result notices (transfer + deposit) --- */
+.wallet-result {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+  flex-wrap: wrap;
+}
+.wallet-result__detail {
+  font-family: var(--font-mono);
+  word-break: break-all;
+}
+
+/* --- Confirm review (transfer modal + deposit step 2) --- */
+.wallet-confirm {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-small);
+}
+.wallet-confirm__row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.wallet-confirm dt {
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+}
+.wallet-confirm dd {
+  margin: 0;
+}
+.wallet-confirm__hex {
+  font-family: var(--font-mono);
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
+/* --- Channel deposit wizard --- */
+.wallet-deposit {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-medium);
+}
+.wallet-deposit__head {
+  display: flex;
+  justify-content: flex-end;
+}
+.wallet-deposit__step {
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+}
+.wallet-deposit__panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-small);
+  min-height: 160px;
+}
+.wallet-deposit__field-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.wallet-deposit__lez {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-tiny);
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+}
+.wallet-deposit__note-list,
+.wallet-deposit__funding-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-tiny);
+}
+.wallet-deposit__note label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+}
+.wallet-deposit__note-id,
+.wallet-deposit__funding-key {
+  font-family: var(--font-mono);
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.wallet-deposit__note-value {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+.wallet-deposit__note-total {
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+  margin: var(--space-tiny) 0 0;
+}
+.wallet-deposit__funding-add,
+.wallet-deposit__tip {
+  display: flex;
+  gap: var(--space-small);
+  align-items: center;
+}
+.wallet-deposit__funding-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+  padding: var(--space-tiny) var(--space-small);
+  background: var(--surface-recessed);
+  border-radius: var(--radius-small);
+}
+.wallet-deposit__funding-remove {
+  flex: 0 0 auto;
+  border: none;
+  background: transparent;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+}
+.wallet-deposit__funding-remove:hover {
+  color: var(--error);
+}
+.wallet-deposit__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+}
+.wallet-deposit__footer-spacer {
+  flex: 1 1 auto;
+}
+.wallet-deposit__submitting {
+  text-align: center;
+  color: var(--text-secondary);
+}

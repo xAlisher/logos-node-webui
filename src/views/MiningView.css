@@ -1,0 +1,292 @@
+/* MiningView — layout for the Mining tab (section 4). Faithful web replica of
+   MiningView.qml: Tickets header, three counter cards, auto-claim section with
+   target rows, manual claim, and a claim-history list. Styled from
+   src/styles/tokens.css custom properties (dark-only). */
+
+.mining-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-medium);
+}
+
+/* --- Header -------------------------------------------------------------- */
+.mining-header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-medium);
+  flex-wrap: wrap;
+}
+
+.mining-header__title {
+  margin: 0;
+  font-size: var(--text-subtitle);
+  font-weight: var(--weight-medium);
+  color: var(--text);
+}
+
+.mining-header__subtitle {
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: var(--text-secondary-size);
+  color: var(--text-tertiary);
+}
+
+/* --- Info affordance ---------------------------------------------------- */
+.mining-info,
+.mining-card__info {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-style: italic;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mining-info:hover,
+.mining-card__info:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+/* --- Counter cards ------------------------------------------------------ */
+.mining-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-medium);
+}
+
+@media (max-width: 640px) {
+  .mining-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mining-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-tiny);
+  padding: var(--space-medium);
+}
+
+.mining-card__info {
+  position: absolute;
+  top: var(--space-small);
+  right: var(--space-small);
+}
+
+.mining-card__value {
+  font-size: var(--text-main-title);
+  font-weight: 700;
+  color: var(--text);
+}
+
+.mining-card__label {
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+}
+
+.mining-card__sub {
+  font-size: var(--text-secondary-size);
+  color: var(--text-tertiary);
+}
+
+/* --- Sections (auto-claim / manual / history) --------------------------- */
+.mining-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-small);
+}
+
+.mining-section__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+}
+
+.mining-section__title {
+  margin: 0;
+  font-size: var(--text-subtitle);
+  font-weight: var(--weight-medium);
+  color: var(--text);
+}
+
+.mining-section__spacer {
+  flex: 1 1 auto;
+}
+
+.mining-tick {
+  font-size: var(--text-secondary-size);
+  color: var(--text-tertiary);
+}
+
+.mining-hint {
+  margin: 0;
+  font-size: var(--text-secondary-size);
+  color: var(--text-tertiary);
+}
+
+.mining-hint--muted {
+  color: var(--text-secondary);
+}
+
+/* --- Auto-claim target rows --------------------------------------------- */
+.mining-targets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-tiny);
+}
+
+.mining-target {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+  font-size: var(--text-secondary-size);
+}
+
+.mining-target__label {
+  color: var(--text-secondary);
+}
+
+.mining-target__addr {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mining-target__balance {
+  color: var(--text);
+}
+
+.mining-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px var(--space-small);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-small);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-tertiary);
+}
+
+.mining-badge--pending {
+  color: var(--warning);
+  border-color: var(--warning);
+}
+
+.mining-badge--landed {
+  color: var(--success);
+  border-color: var(--success);
+}
+
+/* --- Manual claim ------------------------------------------------------- */
+.mining-manual {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+}
+
+.mining-manual__combo {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.mining-result {
+  display: flex;
+  gap: var(--space-small);
+}
+
+/* --- History ------------------------------------------------------------ */
+.mining-history {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-small);
+}
+
+.mining-claim {
+  display: flex;
+  align-items: center;
+  gap: var(--space-medium);
+  padding: var(--space-small) 0;
+  border-bottom: 1px solid var(--border-tertiary-muted);
+}
+
+.mining-claim__main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.mining-claim__value {
+  font-size: var(--text-primary);
+  color: var(--text);
+}
+
+.mining-claim__meta {
+  font-size: var(--text-secondary-size);
+  color: var(--text-tertiary);
+}
+
+.mining-claim__links {
+  display: flex;
+  gap: var(--space-small);
+}
+
+.mining-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--accent-orange);
+  font-size: var(--text-secondary-size);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.mining-empty {
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+  padding: var(--space-small) 0;
+}
+
+/* --- Dialog ------------------------------------------------------------- */
+.mining-dialog__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-tiny);
+}
+
+.mining-dialog__heading {
+  margin: 0;
+  font-size: var(--text-secondary-size);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-tertiary);
+}
+
+.mining-dialog__text {
+  margin: 0;
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+  line-height: var(--line-height);
+}

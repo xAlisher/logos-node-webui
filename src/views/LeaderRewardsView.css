@@ -1,0 +1,262 @@
+/* LeaderRewardsView — layout for the Rewards tab (section 1).
+   Faithful web replica of LeaderRewardsView.qml: Vouchers header + Claim,
+   two stat cards (Ready to claim / Submitted), claim-result notice, and a
+   claim-history list with a "show only pending" filter. Styled from
+   src/styles/tokens.css custom properties (dark-only). */
+
+.lr-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-large);
+}
+
+/* --- Header row: title + subtitle on the left, Claim on the right -------- */
+.lr-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-medium);
+}
+
+.lr-header__title {
+  margin: 0;
+  font-size: var(--text-panel-title);
+  color: var(--text);
+  font-weight: 700;
+}
+
+.lr-header__subtitle {
+  margin: var(--space-tiny) 0 0;
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+}
+
+/* --- Stake (aged notes) summary ----------------------------------------- */
+.lr-stake {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-small);
+}
+
+.lr-stake__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.lr-stake__label {
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.lr-stake__value {
+  font-size: 18px;
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* --- Stat card row ------------------------------------------------------- */
+.lr-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-medium);
+}
+
+.lr-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-small);
+  position: relative;
+}
+
+.lr-card--clickable {
+  cursor: pointer;
+}
+
+.lr-card--clickable:hover {
+  border-color: var(--border-interactive);
+}
+
+.lr-card__value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.1;
+}
+
+.lr-card__label {
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+}
+
+.lr-card__sub {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.lr-card__info {
+  position: absolute;
+  top: var(--space-small);
+  right: var(--space-small);
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 11px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lr-card__info:hover {
+  color: var(--text);
+  border-color: var(--border-interactive);
+}
+
+/* --- Claim-result notice ------------------------------------------------- */
+.lr-notice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+}
+
+/* --- History ------------------------------------------------------------- */
+.lr-history__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-medium);
+}
+
+.lr-history__title {
+  margin: 0;
+  font-size: var(--text-subtitle);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.lr-history__count {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.lr-history__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-small);
+}
+
+.lr-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-medium);
+  padding: var(--space-small) var(--space-medium);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-medium);
+  background: var(--surface);
+}
+
+.lr-row__main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lr-row__title {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.lr-row__meta {
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+.lr-row__links {
+  display: flex;
+  gap: var(--space-small);
+}
+
+.lr-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--accent-orange);
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.lr-badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+.lr-badge--pending {
+  color: var(--color-warn);
+  border: 1px solid var(--color-warn);
+}
+
+.lr-badge--landed {
+  color: var(--color-ok);
+  border: 1px solid var(--color-ok);
+}
+
+.lr-empty,
+.lr-loading {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  padding: var(--space-medium);
+  text-align: center;
+}
+
+/* --- Voucher / info dialog bodies ---------------------------------------- */
+.lr-dialog__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-medium);
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.lr-voucher {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-bottom: var(--space-small);
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.lr-voucher__head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.lr-dialog__section + .lr-dialog__section {
+  margin-top: var(--space-medium);
+}
+
+.lr-dialog__heading {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-tiny);
+}
+
+.lr-dialog__text {
+  font-size: 13px;
+  color: var(--text);
+  margin: 0;
+}

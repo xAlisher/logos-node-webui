@@ -1,0 +1,158 @@
+/* Shared layout for the embedded PoW mining-config controls (PowConfigView +
+   PowAutoClaimTargets), used in the Onboarding Fund step. Faithful web replica of
+   PowConfigView.qml / PowAutoClaimTargets.qml. Styled from src/styles/tokens.css. */
+
+.pow-config,
+.pow-targets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-small);
+}
+
+.pow-config__title {
+  margin: 0;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.pow-config__blurb,
+.pow-targets__blurb {
+  margin: 0;
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+  line-height: var(--line-height);
+}
+
+.pow-config__section {
+  margin: 0;
+  font-size: var(--text-secondary-size);
+  font-weight: var(--weight-medium);
+  color: var(--text);
+}
+
+/* --- One settings row: label … [controls] ------------------------------- */
+.pow-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+}
+
+.pow-row__label {
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+}
+
+.pow-row__spacer {
+  flex: 1 1 auto;
+}
+
+.pow-row__aux {
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+}
+
+.pow-row__field {
+  width: 90px;
+}
+
+/* --- Info affordance ---------------------------------------------------- */
+.pow-info {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-style: italic;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pow-info:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+/* --- Validation / save error -------------------------------------------- */
+.pow-error {
+  margin: 0;
+  font-size: var(--text-secondary-size);
+  color: var(--error);
+  line-height: var(--line-height);
+}
+
+/* --- Auto-claim enable + off note --------------------------------------- */
+.pow-targets__enable {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+}
+
+.pow-targets__enable-label {
+  font-weight: var(--weight-medium);
+  color: var(--text);
+}
+
+.pow-targets__off-note {
+  margin: 0;
+  font-size: var(--text-secondary-size);
+  color: var(--text-tertiary);
+  line-height: var(--line-height);
+}
+
+/* --- Add row + target list ---------------------------------------------- */
+.pow-targets__combo {
+  min-width: 200px;
+}
+
+.pow-targets__threshold {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.pow-targets__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-tiny);
+}
+
+.pow-target {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+}
+
+.pow-target__account {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+  min-width: 0;
+  flex: 0 1 260px;
+}
+
+.pow-target__label {
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+}
+
+.pow-target__addr {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+}
+
+.pow-target__threshold {
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+}

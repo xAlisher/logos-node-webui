@@ -1,0 +1,71 @@
+.stage-lane {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+  flex-wrap: wrap;
+}
+
+.stage-lane__stage {
+  display: flex;
+  align-items: center;
+  gap: var(--space-tiny);
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.stage-lane__stage:not(:last-child)::after {
+  content: "";
+  flex: 1 1 auto;
+  height: var(--border-width);
+  background: var(--border-tertiary-muted);
+}
+
+.stage-lane__dot {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--text-muted);
+}
+
+.stage-lane__label {
+  font-size: var(--text-secondary-size);
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.stage-lane__stage[data-state="complete"] .stage-lane__dot {
+  background: var(--success);
+}
+.stage-lane__stage[data-state="complete"] .stage-lane__label {
+  color: var(--text-secondary);
+}
+
+.stage-lane__stage[data-state="current"] .stage-lane__dot {
+  background: var(--warning);
+}
+.stage-lane__stage[data-state="current"] .stage-lane__label {
+  color: var(--text);
+  font-weight: var(--weight-medium);
+}
+
+.stage-lane__stage[data-state="failed"] .stage-lane__dot {
+  background: var(--error);
+}
+.stage-lane__stage[data-state="failed"] .stage-lane__label {
+  color: var(--error);
+}
+
+.stage-lane__stage[data-busy] .stage-lane__dot {
+  animation: stage-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes stage-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}

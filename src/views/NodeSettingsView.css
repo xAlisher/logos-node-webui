@@ -1,0 +1,230 @@
+/* NodeSettingsView + ConfigUpgradeDialog — layout only, all values from tokens.css.
+   Replicates the QML ColumnLayout of three surfaceRaised LogosFrame cards (the last
+   red-bordered) and the warning dialog's stacked content. */
+
+.view-settings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-large);
+}
+
+.settings-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-small);
+  background: var(--surface-raised);
+  border: var(--border-width) solid transparent;
+  border-radius: var(--radius-large);
+  padding: var(--space-large);
+}
+
+.settings-card--danger {
+  border-color: var(--error);
+}
+
+.settings-card__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+  margin-bottom: var(--space-small);
+}
+
+.settings-card__title {
+  margin: 0;
+  font-size: var(--text-subtitle);
+  font-weight: 500;
+  color: var(--text);
+}
+
+.settings-info-button {
+  margin-left: auto;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-pill);
+  border: var(--border-width) solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: var(--text-secondary-size);
+  font-style: italic;
+  cursor: pointer;
+}
+
+.settings-field-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+}
+
+.settings-field-head--spaced {
+  margin-top: var(--space-small);
+}
+
+.settings-field-label {
+  font-size: var(--text-secondary-size);
+  font-weight: 500;
+  color: var(--text);
+  margin-right: auto;
+}
+
+.settings-field-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+}
+
+.settings-field-input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* The native file input stands in for QML's FileDialog; it stays out of the layout. */
+.settings-file-input {
+  display: none;
+}
+
+.settings-note {
+  margin: 0;
+  font-size: var(--text-secondary-size);
+  color: var(--text-tertiary);
+}
+
+.settings-prose {
+  margin: 0;
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.settings-card__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-small);
+  margin-top: var(--space-medium);
+}
+
+.settings-config-changed,
+.settings-backup-error {
+  margin-top: var(--space-small);
+}
+
+/* Shell-level success toast: fixed, top-right, above the dialog overlay. */
+.settings-shell-toast {
+  position: fixed;
+  top: var(--space-large);
+  right: var(--space-large);
+  z-index: 60;
+  max-width: 360px;
+}
+
+/* ---- ConfigUpgradeDialog ---- */
+.config-upgrade__body {
+  margin: 0;
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.config-upgrade__report {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-tiny);
+  margin-top: var(--space-medium);
+}
+
+.config-upgrade__dropped {
+  background: var(--background-inset);
+  border-radius: var(--radius-small);
+  padding: var(--space-small);
+}
+
+.config-upgrade__dropped-copy {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.config-upgrade__dropped-list {
+  list-style: none;
+  margin: var(--space-small) 0 0;
+  padding: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-small);
+}
+
+.config-upgrade__dropped-item {
+  font-family: var(--font-mono);
+  font-size: var(--text-secondary-size);
+  color: var(--text-tertiary);
+  word-break: break-word;
+}
+
+.config-upgrade__caption {
+  margin: 0;
+  font-size: var(--text-secondary-size);
+  color: var(--text-tertiary);
+}
+
+.config-upgrade__file-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-tiny);
+  margin-top: var(--space-small);
+}
+
+.config-upgrade__file-label {
+  font-size: var(--text-secondary-size);
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.config-upgrade__file-path {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: var(--text-secondary-size);
+  color: var(--text-tertiary);
+}
+
+.config-upgrade__error {
+  margin-top: var(--space-medium);
+}
+
+.config-upgrade__busy {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+  margin-top: var(--space-medium);
+  font-size: var(--text-secondary-size);
+  color: var(--text-secondary);
+}
+
+.config-upgrade__spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--border);
+  border-top-color: var(--primary);
+  animation: config-upgrade-spin 0.8s linear infinite;
+}
+
+@keyframes config-upgrade-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.config-upgrade__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+  width: 100%;
+}
+
+.config-upgrade__actions-spacer {
+  flex: 1 1 auto;
+}
