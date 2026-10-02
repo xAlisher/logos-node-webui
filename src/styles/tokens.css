@@ -1,25 +1,127 @@
-/* Logos Design System tokens — PLACEHOLDER.
- * The authoritative values are extracted into docs/spec/design-system.md (by the DS mapping
- * agent); this file is replaced with the full token set (colors, typography, spacing, radii,
- * light/dark) as part of P1 (foundation). Brand accent is #ff0079. */
+/* Logos Design System tokens — extracted verbatim from the canonical Logos DS QML
+ * (logos-design-system Theme/*) so the web replica matches the official node app.
+ * Full spec + rationale: docs/spec/design-system.md. Dark-only (the node UI ships dark only).
+ * Font: Public Sans (SIL OFL). Loaded via Google Fonts for now; self-hosting the bundled
+ * TTFs for exact fidelity is a P1 follow-up. */
+@import url("https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,500;0,700&display=swap");
+
 :root {
-  --color-accent: #ff0079;
-  --color-bg: #0f1115;
-  --color-surface: #171a21;
-  --color-text: #e6e8eb;
-  --color-muted: #8b93a1;
-  --color-border: #272b33;
-  --color-ok: #3fb950;
-  --color-warn: #d29922;
-  --color-bad: #f85149;
+  /* ---------- RAW PALETTE (primitives; prefer the semantic tokens below) ---------- */
+  --color-white: #FFFFFF;
+  --color-white-06: rgba(255, 255, 255, 0.06);
+  --color-white-63: rgba(255, 255, 255, 0.63);
+  --color-black: #000000;
+  --color-black-10: rgba(0, 0, 0, 0.10);
 
-  --font-body: -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --gray-50: #FAFAFA; --gray-100: #EBEBEB; --gray-200: #D9D9D9; --gray-300: #434343;
+  --gray-320: #343434; --gray-330: #333333; --gray-340: #2F2F2F; --gray-350: #515151;
+  --gray-355: #595959; --gray-360: #232323; --gray-370: #1F1F1F; --gray-390: #A9A9A9;
+  --gray-400: #A4A4A4; --gray-500: #969696; --gray-550: #808080; --gray-600: #717784;
+  --gray-700: #5C5C5C; --gray-800: #2B303B; --gray-850: #262626; --gray-875: #1C1C1C;
+  --gray-900: #171717; --gray-925: #141414; --gray-950: #0E121B; --gray-975: #101214;
+  --gray-550-07: rgba(128, 128, 128, 0.07);
+  --gray-550-20: rgba(128, 128, 128, 0.20);
+  --gray-550-30: rgba(128, 128, 128, 0.30);
 
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-6: 24px;
-  --radius: 10px;
+  --orange-300: #ED7B58; --orange-350: #FF6F42; --orange-400: #FF8800; --orange-450: #FF4911;
+  --orange-500: #F55702; --orange-600: #F57A02; --orange-700: #BF5104;
+  --orange-400-30: rgba(255, 136, 0, 0.30);
+  --peach-100: #FFD5C0;
+
+  --red-400: #FF736A; --red-500: #FB3748; --red-600: #F44336; --red-700: #DC2626;
+  --yellow-300: #EEF083; --yellow-400: #FEBC2E; --yellow-500: #FFA726;
+  --green-400: #6CCC93; --green-500: #49F563; --green-600: #19C332; --green-700: #16A34A; --green-800: #15803D;
+  --blue-400: #4A90E2; --blue-500: #3578C7; --blue-600: #2563EB; --blue-700: #1D4ED8;
+  --cyan-400: #29B6F6; --cyan-500: #0284C7;
+
+  /* ---------- SEMANTIC TOKENS (DarkTheme.qml) — use these in components ---------- */
+  --background: var(--gray-900);
+  --background-secondary: var(--gray-850);
+  --background-tertiary: var(--gray-875);
+  --background-elevated: var(--gray-950);
+  --background-muted: var(--gray-550-07);
+  --background-black: var(--color-black);
+  --background-inset: var(--gray-925);
+  --background-button: var(--gray-340);
+  --surface: var(--gray-320);
+  --surface-raised: var(--gray-360);
+  --surface-recessed: var(--gray-370);
+  --surface-contrast: var(--gray-355);
+
+  --text: var(--color-white);
+  --text-secondary: var(--gray-400);
+  --text-subtle: var(--gray-390);
+  --text-tertiary: var(--gray-500);
+  --text-placeholder: var(--gray-600);
+  --text-muted: var(--gray-700);
+
+  --border: var(--gray-300);
+  --border-secondary: var(--gray-800);
+  --border-tertiary: var(--gray-500);
+  --border-tertiary-muted: rgba(150, 150, 150, 0.20);
+  --border-subtle: var(--gray-330);
+  --border-hairline: var(--gray-550-20);
+  --border-interactive: var(--gray-300);
+  --border-dark: var(--gray-340);
+  --border-strong: var(--gray-350);
+
+  --primary: var(--orange-300);
+  --primary-hover: var(--orange-500);
+  --primary-pressed: var(--orange-600);
+  --primary-soft: var(--peach-100);
+
+  --success: var(--green-500);
+  --success-hover: var(--green-400);
+  --success-pressed: var(--green-600);
+  --error: var(--red-500);
+  --error-hover: var(--red-400);
+  --error-pressed: var(--red-600);
+  --warning: var(--yellow-400);
+  --warning-hover: var(--yellow-500);
+  --info: var(--blue-400);
+  --notification: var(--red-500);
+
+  --accent-orange: var(--orange-300);
+  --accent-orange-mid: var(--orange-350);
+  --accent-orange-deep: var(--orange-450);
+  --accent-burnt-orange: var(--orange-700);
+  --accent-yellow-soft: var(--yellow-300);
+
+  --hover: var(--gray-700);
+  --pressed: var(--gray-850);
+  --disabled: var(--gray-500);
+  --focus: var(--orange-400);
+
+  --glass-overlay: var(--gray-550-07);
+  --glass-strong: var(--gray-550-30);
+  --overlay-dark: rgba(28, 28, 28, 0.30);
+  --overlay-light: var(--color-white-06);
+  --overlay-orange: var(--orange-400-30);
+
+  /* ---------- SPACING / RADII ---------- */
+  --space-tiny: 4px; --space-small: 8px; --space-medium: 12px;
+  --space-large: 16px; --space-xlarge: 20px; --space-xxlarge: 40px;
+  --radius-small: 4px; --radius-medium: 6px; --radius-large: 8px;
+  --radius-xlarge: 16px; --radius-pill: 999px;
+  --border-width: 1px;
+
+  /* ---------- TYPOGRAPHY ---------- */
+  --font-sans: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Public Sans Mono", ui-monospace, "SF Mono", "Roboto Mono", "DejaVu Sans Mono", monospace;
+  --weight-regular: 400; --weight-medium: 500; --weight-bold: 700;
+  --text-main-title: 256px; --text-page-title: 36px; --text-title: 30px; --text-panel-title: 24px;
+  --text-subtitle: 16px; --text-primary: 14px; --text-secondary-size: 12px; --text-badge: 8px;
+  --line-height: 1.25;
+
+  /* back-compat aliases used by the foundation shell */
+  --color-accent: var(--primary);
+  --color-bg: var(--background);
+  --color-surface: var(--surface);
+  --color-text: var(--text);
+  --color-muted: var(--text-secondary);
+  --color-border: var(--border);
+  --color-ok: var(--success);
+  --color-warn: var(--warning);
+  --color-bad: var(--error);
+  --font-body: var(--font-sans);
 }
