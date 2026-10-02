@@ -48,6 +48,12 @@ export interface HeaderProps {
    * (header-start-triggers-upgrade)
    */
   startWouldUpgrade?: boolean;
+  /**
+   * Whether to show the Start/Stop Node button. Native builds manage the node
+   * subprocess (true); the HTTP-only web build has no start/stop endpoint, so it
+   * hides the button — the node's lifecycle is managed by its host. (default true)
+   */
+  showRunButton?: boolean;
 
   onFund?: () => void;
   onStart?: () => void;
@@ -64,6 +70,7 @@ export function Header({
   stopping = false,
   stoppingSeconds = 0,
   startWouldUpgrade = false,
+  showRunButton = true,
   onFund,
   onStart,
   onStop,
@@ -111,15 +118,18 @@ export function Header({
       </Tooltip>
 
       {/* Start / Stop Node (Primary). Disabled while stopping, or when neither
-          start nor stop is available. */}
-      <Button
-        variant="primary"
-        data-testid="header-run-button"
-        disabled={stopping || !(canStop || canStart)}
-        onClick={onRun}
-      >
-        {runLabel}
-      </Button>
+          start nor stop is available. Hidden where the node lifecycle is managed by
+          the host (web build — no start/stop HTTP endpoint). */}
+      {showRunButton && (
+        <Button
+          variant="primary"
+          data-testid="header-run-button"
+          disabled={stopping || !(canStop || canStart)}
+          onClick={onRun}
+        >
+          {runLabel}
+        </Button>
+      )}
     </header>
   );
 }

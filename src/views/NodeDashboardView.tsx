@@ -24,6 +24,7 @@ import {
   uptimeText,
   walletStage,
 } from "./nodeStatus";
+import { useCapabilities } from "../deploy/capabilities";
 import { defaultDashboardModel, useNodeMonitor, type DashboardModel } from "./nodeMonitor";
 import { StageLane } from "./StageLane";
 import { StatTile } from "./StatTile";
@@ -93,6 +94,7 @@ export interface NodeDashboardViewProps extends Partial<NodeViewProps> {
 }
 
 export function NodeDashboardView({ model: override }: NodeDashboardViewProps) {
+  const caps = useCapabilities();
   // Live poller — disabled when a model override is supplied so tests stay deterministic.
   const live = useNodeMonitor({ enabled: override === undefined });
   const m: DashboardModel = useMemo(
@@ -344,32 +346,38 @@ export function NodeDashboardView({ model: override }: NodeDashboardViewProps) {
           caption={miningCaption}
           activeDot={m.powActive}
         />
-        <StatTile
-          testId="tile-cpu"
-          label="CPU"
-          topic="cpu"
-          onInfo={onInfo}
-          dim={dim}
-          value={cpuSampled ? percentText(m.nodeCpuPercent) : DASH}
-          caption={cpuCaption}
-        />
-        <StatTile
-          testId="tile-ram"
-          label="RAM"
-          topic="ram"
-          onInfo={onInfo}
-          dim={dim}
-          value={m.nodeMemoryMb >= 0 ? sizeText(m.nodeMemoryMb) : DASH}
-        />
-        <StatTile
-          testId="tile-disk"
-          label="Disk"
-          topic="disk"
-          onInfo={onInfo}
-          value={m.nodeDiskUsedMb >= 0 ? sizeText(m.nodeDiskUsedMb) : DASH}
-          valueColorVar={diskColor}
-          caption={m.nodeDiskFreeMb >= 0 ? `${sizeText(m.nodeDiskFreeMb)} free` : ""}
-        />
+        {/* CPU / RAM / Disk are sampled by the native backend and not exposed over
+            HTTP — hidden in the web build (they would be permanent em-dashes). */}
+        {caps.resourceSampling && (
+          <>
+            <StatTile
+              testId="tile-cpu"
+              label="CPU"
+              topic="cpu"
+              onInfo={onInfo}
+              dim={dim}
+              value={cpuSampled ? percentText(m.nodeCpuPercent) : DASH}
+              caption={cpuCaption}
+            />
+            <StatTile
+              testId="tile-ram"
+              label="RAM"
+              topic="ram"
+              onInfo={onInfo}
+              dim={dim}
+              value={m.nodeMemoryMb >= 0 ? sizeText(m.nodeMemoryMb) : DASH}
+            />
+            <StatTile
+              testId="tile-disk"
+              label="Disk"
+              topic="disk"
+              onInfo={onInfo}
+              value={m.nodeDiskUsedMb >= 0 ? sizeText(m.nodeDiskUsedMb) : DASH}
+              valueColorVar={diskColor}
+              caption={m.nodeDiskFreeMb >= 0 ? `${sizeText(m.nodeDiskFreeMb)} free` : ""}
+            />
+          </>
+        )}
         <StatTile
           testId="tile-slot"
           label="Slot"

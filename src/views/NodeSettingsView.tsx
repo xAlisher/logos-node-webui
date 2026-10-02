@@ -20,6 +20,7 @@
 import { useCallback, useRef, useState } from "react";
 
 import { Badge, Button, Card, CopyButton, HashRow, TextField, Toast } from "../ds";
+import { useCapabilities } from "../deploy/capabilities";
 import { registerParity } from "../test/parity";
 import { NodeOffNotice } from "../shell/NodeOffNotice";
 import type { NodeViewProps } from "./types";
@@ -116,6 +117,7 @@ export function NodeSettingsView({
   api,
   onBackupSuccess,
 }: NodeSettingsViewProps) {
+  const caps = useCapabilities();
   const [model, setModel] = useState<NodeSettingsModel>({ ...DEFAULT_MODEL, ...initial });
   const [backupError, setBackupError] = useState("");
   // Shell-level success toast. The inventory is explicit: backup SUCCESS is a shell
@@ -191,6 +193,24 @@ export function NodeSettingsView({
     <section className="view-settings" data-testid="view-node-settings">
       <NodeOffNotice reason={nodeOffReason} severity={nodeOffSeverity} />
 
+      {!caps.fileSystem ? (
+        /* Web build: config, keystore, and database are native filesystem concerns
+           with no HTTP endpoint — managed by the node's host, not this UI. */
+        <Card className="settings-card" data-testid="settings-host-managed">
+          <div className="settings-card__head">
+            <h3 className="settings-card__title">Managed by the host</h3>
+          </div>
+          <p className="settings-prose">
+            This node runs inside its package container. Its configuration, keystore,
+            and database live with the node and are managed from your DAppNode — open
+            this package&rsquo;s <strong>Config</strong>, <strong>Backup</strong>, and{" "}
+            <strong>File Manager</strong> tabs to change settings, back up your keys, or
+            reset the database. Everything that the node exposes over its API — status,
+            mining, rewards, the explorer, and the wallet — is in the tabs above.
+          </p>
+        </Card>
+      ) : (
+      <>
       {/* ---- 1. Node config card ---- */}
       <Card
         className="settings-card"
@@ -430,6 +450,8 @@ export function NodeSettingsView({
         }}
         onDismiss={dismissDialog}
       />
+      </>
+      )}
     </section>
   );
 }

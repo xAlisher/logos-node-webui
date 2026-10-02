@@ -84,9 +84,11 @@
 }
 
 .mining-card__value {
-  font-size: var(--text-main-title);
+  /* Prominent counter, not the 256px splash/marketing size. */
+  font-size: var(--text-page-title);
   font-weight: 700;
   color: var(--text);
+  line-height: var(--line-height);
 }
 
 .mining-card__label {

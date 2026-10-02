@@ -36,6 +36,7 @@ import type { LeaderClaimVouchers } from "../api/endpoints";
 import { startMining as apiStartMining, stopMining as apiStopMining } from "../api/endpoints";
 import { registerParity } from "../test/parity";
 
+import { useCapabilities } from "../deploy/capabilities";
 import { ChainFooter } from "./ChainFooter";
 import { useGracefulShutdown } from "./gracefulShutdown";
 import { Header } from "./Header";
@@ -134,6 +135,7 @@ export function Shell({
   nodeOffReason: nodeOffOverride,
   nodeOffSeverity: nodeOffSeverityOverride,
 }: ShellProps) {
+  const caps = useCapabilities();
   const [activeKey, setActiveKey] = useState<string>(initialTab);
   // Setup-open + upgrade-dialog are UI state the shell owns on top of the backend model.
   const [setupOpen, setSetupOpen] = useState<boolean>(modelProp?.setupOpen ?? false);
@@ -283,6 +285,7 @@ export function Shell({
         canStop={canStop}
         stopping={isStopping(model)}
         startWouldUpgrade={startTriggersUpgrade(model)}
+        showRunButton={caps.nodeLifecycle}
         onFund={() => void handleFund()}
         onStart={() => void handleStart()}
         onStop={() => void handleStop()}
