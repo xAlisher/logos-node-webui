@@ -14,7 +14,18 @@ import urllib.parse
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
 HOP = {"connection", "keep-alive", "proxy-authenticate", "proxy-authorization",
-       "te", "trailers", "transfer-encoding", "upgrade", "host"}
+       "te", "trailers", "transfer-encoding", "upgrade", "host", "origin"}
+
+
+def cross_origin(origin, host):
+    """True when a browser request comes from a page on another host.
+
+    Node 0.3.6 refuses an Origin it doesn't know (logos-blockchain#3996), so this proxy is the
+    browser boundary: it refuses other pages and forwards same-origin requests without Origin.
+    """
+    if not origin:
+        return False
+    return urllib.parse.urlsplit(origin).netloc.lower() != (host or "").lower()
 
 
 def make_handler(dist, node):
@@ -34,6 +45,9 @@ def make_handler(dist, node):
             super().end_headers()
 
         def _proxy(self):
+            if cross_origin(self.headers.get("Origin"), self.headers.get("Host")):
+                self.send_error(403, "cross-origin request refused")
+                return
             path = self.path[len("/api"):] or "/"
             body = None
             n = int(self.headers.get("Content-Length") or 0)
