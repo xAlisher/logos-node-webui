@@ -1,6 +1,14 @@
 # nginx serves the built static UI and reverse-proxies the node HTTP API.
 # ${NODE_UPSTREAM} is substituted at container start by the stock nginx
 # `20-envsubst-on-templates.sh` entrypoint (host:port of the node, e.g. node:8080).
+# Node 0.3.6 refuses a request whose Origin it doesn't know (logos-blockchain#3996). This proxy is
+# the browser boundary instead: a page from another host is refused here, and a same-origin
+# request is forwarded without Origin. $origin_host is the host[:port] an Origin names.
+map $http_origin $origin_host {
+    "~^[a-z][a-z0-9+.-]*://(?<oh>[^/]+)$" $oh;
+    default "";
+}
+
 server {
     listen 80;
     server_name _;
@@ -15,9 +23,17 @@ server {
     # The UI calls the node under the /api prefix (see src/api/client.ts).
     # Strip /api/ and forward to the node's HTTP API on the package network.
     location /api/ {
+        set $cross_origin "";
+        if ($http_origin != "") { set $cross_origin "1"; }
+        if ($origin_host = $http_host) { set $cross_origin ""; }
+        if ($cross_origin) { return 403; }
+
         proxy_pass http://${NODE_UPSTREAM}/;
         proxy_http_version 1.1;
-        proxy_set_header Host $host;
+        # The node answers only to IPs, localhost and the names in api.backend.allowed_hosts,
+        # so send the upstream's own name (the DAppNode package allows `node`).
+        proxy_set_header Host $proxy_host;
+        proxy_set_header Origin "";
         proxy_set_header Connection "";
 
         # Two endpoints are Server-Sent Event streams
